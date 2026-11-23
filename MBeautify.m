@@ -416,27 +416,19 @@ classdef MBeautify
             % function configuration = getConfiguration()
             %
             
-            [parent, file, ext] = fileparts(MBeautify.RulesXMLFileFull);
-            path = java.nio.file.Paths.get(parent, [file, ext]);
-            
-            if ~path.toFile.exists()
+            if ~isfile(MBeautify.RulesXMLFileFull)
                 error('MBeautifier:Configuration:ConfigurationFileDoesNotExist', 'The configuration XML file is missing!');
             end
-            
-            bytes = java.nio.file.Files.readAllBytes(path);
-            md = java.security.MessageDigest.getInstance('md5');
-            currentChecksum = javax.xml.bind.DatatypeConverter.printHexBinary(md.digest(bytes));
-            storedChecksum = getappdata(0, 'MBeautifier_ConfigurationChecksum');
-            if isempty(storedChecksum)
-                storedChecksum = '';
-            end
+
+            currentContents = fileread(MBeautify.RulesXMLFileFull);
+            storedContents = getappdata(0, 'MBeautifier_ConfigurationContents');
             configuration = [];
-            if strcmpi(currentChecksum, storedChecksum)
+            if isequal(currentContents, storedContents)
                 configuration = getappdata(0, 'MBeautifier_ConfigurationObject');
             end
             if isempty(configuration)
                 configuration = MBeautifier.Configuration.Configuration.fromFile(MBeautify.RulesXMLFileFull);
-                setappdata(0, 'MBeautifier_ConfigurationChecksum', currentChecksum);
+                setappdata(0, 'MBeautifier_ConfigurationContents', currentContents);
                 setappdata(0, 'MBeautifier_ConfigurationObject', configuration);
             end
         end
