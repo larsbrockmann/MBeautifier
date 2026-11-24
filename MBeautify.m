@@ -416,7 +416,7 @@ classdef MBeautify
             % function configuration = getConfiguration()
             %
             
-            if ~isfile(MBeautify.RulesXMLFileFull)
+            if exist(MBeautify.RulesXMLFileFull, 'file') ~= 2
                 error('MBeautifier:Configuration:ConfigurationFileDoesNotExist', 'The configuration XML file is missing!');
             end
 
