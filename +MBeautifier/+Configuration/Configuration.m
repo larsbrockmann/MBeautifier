@@ -72,9 +72,9 @@ classdef Configuration < handle
 
             for iOperator = 0:operatorCount - 1
                 currentOperator = allOperatorItems.item(iOperator);
-                key = char(currentOperator.getElementsByTagName('Key').item(0).getTextContent().toString());
-                from = removeXMLEscaping(char(currentOperator.getElementsByTagName('ValueFrom').item(0).getTextContent().toString()));
-                to = removeXMLEscaping(char(currentOperator.getElementsByTagName('ValueTo').item(0).getTextContent().toString()));
+                key = char(currentOperator.getElementsByTagName('Key').item(0).getTextContent());
+                from = removeXMLEscaping(char(currentOperator.getElementsByTagName('ValueFrom').item(0).getTextContent()));
+                to = removeXMLEscaping(char(currentOperator.getElementsByTagName('ValueTo').item(0).getTextContent()));
 
                 operatorPaddingRuleNamesInOrder{iOperator+1} = lower(key);
                 operatorRules(lower(key)) = MBeautifier.Configuration.OperatorPaddingRule(key, from, to);
@@ -85,8 +85,8 @@ classdef Configuration < handle
 
             for iSpecRule = 0:allSpecialItems.getLength() - 1
                 currentRule = allSpecialItems.item(iSpecRule);
-                key = char(currentRule.getElementsByTagName('Key').item(0).getTextContent().toString());
-                value = char(currentRule.getElementsByTagName('Value').item(0).getTextContent().toString());
+                key = char(currentRule.getElementsByTagName('Key').item(0).getTextContent());
+                value = char(currentRule.getElementsByTagName('Value').item(0).getTextContent());
 
                 specialRules(lower(key)) = MBeautifier.Configuration.SpecialRule(key, value);
             end
@@ -96,8 +96,8 @@ classdef Configuration < handle
 
             for iKeywordRule = 0:allKeywordItems.getLength() - 1
                 currentRule = allKeywordItems.item(iKeywordRule);
-                keyword = char(currentRule.getElementsByTagName('Keyword').item(0).getTextContent().toString());
-                rightPadding = str2double(char(currentRule.getElementsByTagName('RightPadding').item(0).getTextContent().toString()));
+                keyword = char(currentRule.getElementsByTagName('Keyword').item(0).getTextContent());
+                rightPadding = str2double(char(currentRule.getElementsByTagName('RightPadding').item(0).getTextContent()));
 
                 keywordRules(lower(keyword)) = MBeautifier.Configuration.KeywordPaddingRule(keyword, rightPadding);
             end
